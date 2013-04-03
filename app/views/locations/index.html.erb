@@ -37,7 +37,7 @@ var homeCenter; // center of the map- used when closing popups
 function initialize() {
     //geocoder is a global var, no var prefix here
     geocoder = new google.maps.Geocoder();
-    var myLatlng = homeCenter = new google.maps.LatLng(45.528, -122.676); // this is Portland
+    var myLatlng = homeCenter = new google.maps.LatLng(45.528, -47.676); // this is Portland
     var mapOptions = {
         zoom: 12,
         center: new google.maps.LatLng(45.528, -122.676),
@@ -53,15 +53,17 @@ function initialize() {
 }
 
 // This function adds the address passed to the map as a marker
-function codeAddress(address, infoWin) {
+function codeAddress(lat, longs, infoWin) {
+  var newLatLng = new google.maps.LatLng(lat, longs);
     // var address = document.getElementById("address").value;
-    console.log(address);
-    geocoder.geocode( { 'address': address}, function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
+    // console.log(address);
+    // geocoder.geocode( { 'address': address}, function(results, status) {
+    //     if (status == google.maps.GeocoderStatus.OK) {
             // map.setCenter(results[0].geometry.location);
             var marker = new google.maps.Marker({
                 map: map, // using global "map" var here
-                position: results[0].geometry.location
+                // position: results[0].geometry.location
+                position: newLatLng
             });
             var popup = new google.maps.InfoWindow({
                 content: infoWin,
@@ -81,30 +83,14 @@ function codeAddress(address, infoWin) {
                 currentPopup = null;
             });
 
-        }
-        else {
-            alert("Geocode was not successful for the following reason: " + status);
-        }
-    });
+        // }
+        // else {
+        //     alert("Geocode was not successful for the following reason: " + status);
+        // }
+    // });
 }
 
-function MakeSubjectList(data) {
-    var post_subject_item;
-    for (var i = 0; i < data.length; i++) {
-        post_subject_item = $('<li>' + data[i].subject + '</li>');
-        $('#subject-list').prepend(post_subject_item);
-    }
-}
 
-function MakeLocationList(data) {
-    var post_location_item;
-    for (var i = 0; i < data.length; i++) {
-        if ( typeof data[i].location !== null) {
-            post_location_item = $('<li>' + data[i].location + '</li>');
-            $('#location-list').prepend(post_location_item);
-        }
-    }
-}
 
 
 function geoLoop() {
@@ -116,8 +102,25 @@ function geoLoop() {
 
 var spec = [];
 <% @offers.each do |offer| %>
-    spec.push({"subject":"<%= offer.subject %>","location":"<%= offer.location %>"});
+    spec.push({"subject":"<%= offer.subject %>","location":"<%= offer.location %>", "latitude":"<%= offer.latitude %>", "longitude":"<%= offer.longitude %>"});
 <% end %>
+function MakeSubjectList(spec) {
+    var post_subject_item;
+    for (var i = 0; i < spec.length; i++) {
+        post_subject_item = $('<li>' + spec[i].subject + '</li>');
+        $('#subject-list').prepend(post_subject_item);
+    }
+}
+
+function MakeLocationList(spec) {
+    var post_location_item;
+    for (var i = 0; i < spec.length; i++) {
+        if ( typeof spec[i].location !== null) {
+            post_location_item = $('<li>' + spec[i].location + '</li>');
+            $('#location-list').prepend(post_location_item);
+        }
+    }
+}
 // console.log(spec[]);
 // var spec = [{"subject":"whatever","location":"SW PDX"}];
 // var what= <%= @locations.to_json %>;
@@ -142,7 +145,10 @@ var spec = [];
       console.log(spec[0]);
       for (var i = 0; i < spec.length; i++) {
         // if (typeof spec[i].location === 'string') {
-                setInterval(codeAddress(spec[i].location, spec[i].subject), 500);
+                // setInterval(codeAddress(spec[i].location, spec[i].subject), 500);
+                // setInterval(codeAddress(spec[i].latitude, spec[i].longitude, spec[i].subject), 500);
+                // console.log(spec[i]);
+                codeAddress(spec[i].latitude, spec[i].longitude, spec[i].subject);
                 console.log(spec[i]);
             //}
       }
