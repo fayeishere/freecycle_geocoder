@@ -68,11 +68,12 @@ def search_for_location (subject)
     unless location.is_a? String
       raise "Location, #{location}, neither nil or String."
     end
+    location += ", Portland, Oregon"
   end
   return location
 end
 
-
+# needs to add portland, or to search location
 # http://rubydoc.info/gems/mail
 
 def make_email_data(email)

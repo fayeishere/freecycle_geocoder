@@ -10,9 +10,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
     initialize();
-    //experimenting with setInterval to get around google's exceeding query alert
-    // setInterval(geoLoop(),3000);
-    //uncomment geoLoop() if abandoning setInterval
+
     geoLoop();
     // codeAddress("Gresham");
     $("h1").click( function() {
@@ -75,7 +73,7 @@ function codeAddress(lat, longs, infoWin) {
                     currentPopup = null;
                 }
                 popup.open(map, marker);
-                map.setCenter(results[0].geometry.location);
+                // map.setCenter(results[0].geometry.location);
                 currentPopup = popup;
             });
             google.maps.event.addListener(popup, "closeclick", function() {
@@ -83,33 +81,19 @@ function codeAddress(lat, longs, infoWin) {
                 currentPopup = null;
             });
 
+
         // }
         // else {
         //     alert("Geocode was not successful for the following reason: " + status);
         // }
     // });
 }
-
-
-
-
-function geoLoop() {
-
-// var data = [{"subject":"[freecycleportland] OFFER - Canon Multi-function Color Unit - SW PDX","location":"SW PDX"}]
-// @locations is an array of objects of the form:
-// id, date, message_id, subject, location, body, latitude, longitude, data, created_at, updated_at
-// var data = <% @locations %>
-
-var spec = [];
-<% @offers.each do |offer| %>
-    spec.push({"subject":"<%= offer.subject %>","location":"<%= offer.location %>", "latitude":"<%= offer.latitude %>", "longitude":"<%= offer.longitude %>"});
-<% end %>
 function MakeSubjectList(spec) {
-    var post_subject_item;
-    for (var i = 0; i < spec.length; i++) {
-        post_subject_item = $('<li>' + spec[i].subject + '</li>');
-        $('#subject-list').prepend(post_subject_item);
-    }
+  var post_subject_item;
+  for (var i = 0; i < spec.length; i++) {
+    post_subject_item = $('<li>' + spec[i].subject + '</li>');
+    $('#subject-list').prepend(post_subject_item);
+  }
 }
 
 function MakeLocationList(spec) {
@@ -121,47 +105,47 @@ function MakeLocationList(spec) {
         }
     }
 }
-// console.log(spec[]);
-// var spec = [{"subject":"whatever","location":"SW PDX"}];
-// var what= <%= @locations.to_json %>;
 
-    // AJAX
-  //   $.ajax ({
-  // url: "/locations#ajax",
-  // dataType: "json",
-  // success: function(data) {
-  //     console.log(data);
-  //       // generate location list via jquery
-  //       MakeLocationList(data);
-  //       // generate subject list via jquery
-  //       MakeSubjectList(data);
 
-      // for (var i = 0; i < data.length; i++) {
-      //   if (typeof data[i].location === 'string') {
-      //           setInterval(codeAddress(data[i].location, data[i].subject), 500);
-      //           console.log(data[i]);
-      //       }
-      // }
-      console.log(spec[0]);
-      for (var i = 0; i < spec.length; i++) {
-        // if (typeof spec[i].location === 'string') {
-                // setInterval(codeAddress(spec[i].location, spec[i].subject), 500);
-                // setInterval(codeAddress(spec[i].latitude, spec[i].longitude, spec[i].subject), 500);
-                // console.log(spec[i]);
-                codeAddress(spec[i].latitude, spec[i].longitude, spec[i].subject);
-                console.log(spec[i]);
-            //}
+
+function geoLoop() {
+
+  // var data = [{"subject":"[freecycleportland] OFFER - Canon Multi-function Color Unit - SW PDX","location":"SW PDX"}]
+  // @locations is an array of objects of the form:
+  // id, date, message_id, subject, location, body, latitude, longitude, data, created_at, updated_at
+  // var data = <% @locations %>
+
+  // var spec = <%= @offers.to_json %>;
+
+  // MakeLocationList(spec);
+  // MakeList(spec);
+  // console.log(spec[]);
+  // var spec = [{"subject":"whatever","location":"SW PDX"}];
+  // var what= <%= @locations.to_json %>;
+
+  // AJAX
+  $.ajax ({
+    url: "/locations",
+    dataType: "json",
+    type: "GET",
+    context: this,
+    success: function(data) {
+      // generate location list via jquery
+      MakeLocationList(data);
+      // generate subject list via jquery
+      MakeSubjectList(data);
+
+      for (var i = 0; i < data.length; i++) {
+        if (typeof data[i].location === 'string') {
+          codeAddress(data[i].latitude, data[i].longitude, data[i].subject);
+          console.log(data);
+        }
       }
-  //   },
-  // type: "GET",
-  // context: this
-  //   });
 
-    // for (var mail_data in recent_mail_data) {
+    }
+  });
 
-    // }
 }
-// end geoLoop
     </script>
 
 

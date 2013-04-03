@@ -1,34 +1,19 @@
-require 'freecycle_mail.rb'
 class LocationsController < ApplicationController
+  # takes request for html or json and returns that
+  respond_to :html, :json
+
   def new
     @location = Location.new
 
     render :new
   end
-  # def create
-  #   @location = Location.new(params[:location])
 
-  #   itsaved = @location.save
-  #   if itsaved
-  #     redirect_to :show
-  #   else
-  #     render :new
-  #   end
-  # end
   def index
-    load "freecycle_mail.rb"
-        # list of Location objects
+    # list of Location objects
+    # pulling all listings in database
     @offers = Location.all
-    recent_offers_web_data()
-    # @subject = Location.new(params[:subject])
-    #     itsaved = @subject.save
-    # if itsaved
-    #   redirect_to :show
-    # else
-    #   render :index
-    # end
+    respond_with(@offers)
 
-    render :index
 
   end
   def show
