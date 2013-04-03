@@ -6,6 +6,7 @@ $LOAD_PATH << File.join(File.dirname(__FILE__))
 require 'mail_config'
 require 'mail'
 require 'json'
+require 'rexml/document'
 
 # http://blog.rubybestpractices.com/posts/gregory/033-issue-4-configurable.html
 # http://metabates.com/2011/06/28/lets-say-goodbye-to-yaml-for-configuration-shall-we/
@@ -84,12 +85,14 @@ def make_email_data(email)
   data[:subject] = email.subject
   data[:location] = location
   data[:body] = email.body
+  debugger
+  puts email.body.decoded
   Location.create(:date => email.date, :message_id => email.message_id, :subject => email.subject, :body => email.body, :location => location)
 
   # Location.create(:subject => email.subject)
   # Location.create(:body => email.body)
 
-
+# p email.html_part.body.decoded.scan(/<a[^>]+>[^<]+<\/a>/)
   return data
 end
 
