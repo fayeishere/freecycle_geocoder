@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  date: MyString
+  message_id: MyString
+  subject: MyString
+  location: MyString
+  body: MyString
+  latitude: MyString
+  longitude: MyString
+  data: MyString
+
+two:
+  date: MyString
+  message_id: MyString
+  subject: MyString
+  location: MyString
+  body: MyString
+  latitude: MyString
+  longitude: MyString
+  data: MyString
