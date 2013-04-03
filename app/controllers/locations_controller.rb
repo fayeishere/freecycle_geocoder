@@ -2,11 +2,11 @@ class LocationsController < ApplicationController
   # takes request for html or json and returns that
   respond_to :html, :json
 
-  def new
-    @location = Location.new
+  # def new
+  #   @location = Location.new
 
-    render :new
-  end
+  #   render :new
+  # end
 
   def index
     # list of Location objects
@@ -16,10 +16,10 @@ class LocationsController < ApplicationController
 
 
   end
-  def show
-    # goes to /locations/:id
-    @location = Location.find(params[:id])
+  # def show
+  #   # goes to /locations/:id
+  #   @location = Location.find(params[:id])
 
-    render :show
-  end
+  #   render :show
+  # end
 end

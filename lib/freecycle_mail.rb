@@ -106,6 +106,4 @@ end
 def recent_offers_web_data
   # Return a json string of recent offer data
   recent_offers().to_json
-  # @subject = Location.new(params[:subject])
-  #       itsaved = @subject.save
 end
