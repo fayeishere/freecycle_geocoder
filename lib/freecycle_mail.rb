@@ -85,14 +85,17 @@ def make_email_data(email)
   data[:subject] = email.subject
   data[:location] = location
   data[:body] = email.body
-  debugger
-  puts email.body.decoded
-  Location.create(:date => email.date, :message_id => email.message_id, :subject => email.subject, :body => email.body, :location => location)
 
-  # Location.create(:subject => email.subject)
-  # Location.create(:body => email.body)
+  # turn email.body to a string and parse for the following:
+  #  <a href="http://groups.yahoo.com/group/freecycleportland/message/239070
+  #  ;_ylc=X3oDMTM5czZxaTBzBF9TAzk3MzU5NzE0BGdycElkAzExMDMyNjg2BGdycHNwSWQDMTcwNTA2NDIzNQRtc2dJZAMyMzkwNzAEc2VjA2Z0cgRzbGsDdnRwYwRzdGltZQMxMzY1MzkyNjcwBHRwY0lkAzIzOTA3MA--" style="text-decoration: none; color: #2D50FD;">Messages in this topic</a>
+  # 1. substring on http://groups.yahoo.com/group/freecycleportland/message/
 
-# p email.html_part.body.decoded.scan(/<a[^>]+>[^<]+<\/a>/)
+  matching = email.body.match /http:\/\/groups.yahoo.com\/group\/freecycleportland\/message\/\d+/
+
+
+  Location.create(:date => email.date, :message_id => email.message_id, :subject => email.subject, :body => matching.to_s, :location => location)
+
   return data
 end
 

@@ -11,6 +11,7 @@ class LocationsController < ApplicationController
   def index
     # list of Location objects
     # pulling all listings in database
+    # recent_offers()
     @offers = Location.all
     respond_with(@offers)
 
