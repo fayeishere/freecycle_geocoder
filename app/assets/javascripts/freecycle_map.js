@@ -39,7 +39,7 @@ function initialize() {
 }
 
 // This function adds the lat/longs and subect passed to the map as a marker
-function codeAddress(lat, longs, infoWin, link) {
+function codeAddress(lat, longs, infoWin, links) {
   var newLatLng = new google.maps.LatLng(lat, longs);
     // var address = document.getElementById("address").value;
     // console.log(address);
@@ -52,7 +52,7 @@ function codeAddress(lat, longs, infoWin, link) {
                 position: newLatLng
             });
             var popup = new google.maps.InfoWindow({
-                content: infoWin + "" + link,
+                content: infoWin + " " + links.link(links),
                 maxWidth: 300
             });
             google.maps.event.addListener(marker, "click", function() {

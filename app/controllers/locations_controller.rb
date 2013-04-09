@@ -16,6 +16,7 @@ class LocationsController < ApplicationController
     respond_with(@offers)
 
 
+
   end
   # def show
   #   # goes to /locations/:id

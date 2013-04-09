@@ -1,14 +1,37 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>FreecycleGeocoder</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="/assets/application.css">
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgtUj9-u9zRi20k6Apg-Ii9TqbJmFa_2Q&sensor=false&marker=Portland,+Oregon"></script>
+    <script type="text/javascript" src="/assets/application.js"></script>
+  </head>
+  <body>
+    <div class="container">
 
-<%= yield %>
+      <header>
+        <!-- banner -->
+        <div id="logo">
+          <a href="#"><img src="/assets/logo.png" alt="mapper logo"></a>
+        </div>
+        <h1>freecycle mapper</h1>
+        <div id="icons">
+          <img src="/assets/facebook-icon.png" alt="link to facebook">
+          <img src="/assets/email-icon.png" alt="email us">
+        </div>
 
-</body>
+      </header>
+
+      <%= yield %>
+
+      <footer>
+        <div class="freecycle-logo">
+          <a href="#">
+            <img src="http://static.t-f-n.org/images/freecycle_logo.jpg" alt="free cycle logo" width="150px" height="50px">
+          </a>
+        </div>
+      </footer>
+
+    </div>
+  </body>
 </html>
