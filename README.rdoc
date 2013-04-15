@@ -6,7 +6,7 @@ mobility. Our hope is that this app can be used in conjunction with freecycle
 and help its group members use the information to find offers in a more
 reasonable scope ie distance.
 
-To use this opensource application (as is) you must have be a member of
+To use this opensource application (as is) you must be a member of
 the freecycle portland group and create a lib/mail_config.rb file with
 your credentials in this format:
 

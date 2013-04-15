@@ -18,7 +18,7 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
-job_type :dataPull, '/lib/freecycle_mail.rb'
+
 every 30.s do
-  dataPull "recent_offers()"
+  runner "locations.recent_offers()"
 end
