@@ -6,7 +6,6 @@ $LOAD_PATH << File.join(File.dirname(__FILE__))
 require 'mail_config'
 require 'mail'
 require 'json'
-require 'rexml/document'
 
 # http://blog.rubybestpractices.com/posts/gregory/033-issue-4-configurable.html
 # http://metabates.com/2011/06/28/lets-say-goodbye-to-yaml-for-configuration-shall-we/
@@ -14,102 +13,110 @@ require 'rexml/document'
 
 # 'lib/mail_config.rb should be a ruby file in the following format:
 
-# module FreeCycleMap
+# module FreeCycleConfig
 #   USER_CONFIG = {
 #     :user_name => "username",
 #     :password => "password" }
 #   MAIL_CONFIG = {
 #     :server => "mailserver",
 #     :group => "freecycle mailing list email address" }
+#   LOCATION_SPECIFIER = "What to add to location for searches"
 # end
 
 # !!! FIXME [wc 2013-03-13]: This is somewhat bad
 
-credentials = {
-  :port => 993,
-  :enable_ssl => true
-}
+module FreeCycleMail
 
-credentials[:address] = FreeCycleMap::MAIL_CONFIG[:server]
-credentials[:user_name] = FreeCycleMap::USER_CONFIG[:user_name]
-credentials[:password] = FreeCycleMap::USER_CONFIG[:password]
+  LOCATION_SPECIFIER = FreeCycleConfig::LOCATION_SPECIFIER
+  
+  CREDENTIALS = {
+    :port => 993,
+    :enable_ssl => true
+  }
 
+  CREDENTIALS[:address] = FreeCycleConfig::MAIL_CONFIG[:server]
+  CREDENTIALS[:user_name] = FreeCycleConfig::USER_CONFIG[:user_name]
+  CREDENTIALS[:password] = FreeCycleConfig::USER_CONFIG[:password]
 
-
-Mail.defaults { retriever_method :imap, credentials }
+  Mail.defaults { retriever_method :imap, CREDENTIALS }
 
 # Now we are ready to retrieve mail and work with them.
 
-def search_for_location (subject)
-  # Search a subject for possible locations
+  def FreeCycleMail.search_for_location (subject)
+    # Search a subject for possible locations
+    
+    # first check for location in parentheses
+    location = subject.scan(/\(.*\)/).first
+    unless location.nil?
+      if location.is_a? String
+        location = location[1..-2]
+      end
+    end
 
-  # first check for location in parentheses
-  location = subject.scan(/\(.*\)/).first
-  unless location.nil?
-    if location.is_a? String
-      location = location[1..-2]
+    # check for location after one or more dashes
+    if location.nil?
+      s = subject.split(/-+/).last
+      s == subject ? location = nil : location = s.strip
+    end
+    
+    # check for location after the last word "in"
+    if location.nil?
+      s = subject.split(/in /).last
+      s == subject ? location = nil : location = s.strip
+    end
+    
+    # raise an error if somehow the location in string is neither nil or
+    # string
+    unless location.nil?
+      unless location.is_a? String
+        raise "Location, #{location}, neither nil or String."
+      end
+
+      #FIXME: the location specifier is really most useful for the
+      #geocoding and this may not be the best place to put it.
+      unless LOCATION_SPECIFIER
+        location += ", #{LOCATION_SPECIFIER}"
+      end
+    end
+    return location
+  end
+
+  # http://rubydoc.info/gems/mail
+
+  def FreeCycleMail.make_email_data(email)
+    data = {}
+    data[:date] = email.date
+    data[:message_id] = email.message_id
+    data[:subject] = email.subject
+    data[:location] = search_for_location(email.subject)
+    data[:body] = email.body
+    return data
+  end
+
+  def FreeCycleMail.get_recent_offers(count=nil)
+    offers = Mail.find({
+                         :order => :desc,
+                         :what => :last,
+                         :count => count,
+                         :keys => ["SUBJECT", "OFFER"]
+                       })
+    if offers.is_a? Mail::Message
+      return [offers]
+    elsif offers.is_a? Array
+      return offers
+    else
+      raise "Invalid return from Mail.find."
     end
   end
-
-  # check for location after one or more dashes
-  if location.nil?
-    s = subject.split(/-+/).last
-    s == subject ? location = nil : location = s.strip
+  
+  def FreeCycleMail.recent_offers (count=nil)
+    # Returns a list of subject lines with the word 'offer' in them.
+      get_recent_offers.map { |email| make_email_data(email) }
   end
-
-  # check for location after the last word "in"
-  if location.nil?
-    s = subject.split(/in /).last
-    s == subject ? location = nil : location = s.strip
+  
+  def FreeCycleMail.recent_offers_web_data
+    # Return a json string of recent offer data
+    return recent_offers().to_json
   end
-
-  # raise an error if somehow the location in string is neither nil or
-  # string
-  unless location.nil?
-    unless location.is_a? String
-      raise "Location, #{location}, neither nil or String."
-    end
-    location += ", Portland, Oregon"
-  end
-  return location
-end
-
-# needs to add portland, or to search location
-# http://rubydoc.info/gems/mail
-
-def make_email_data(email)
-  data = {}
-  location = search_for_location(email.subject)
-  data[:date] = email.date
-  data[:message_id] = email.message_id
-  data[:subject] = email.subject
-  data[:location] = location
-  data[:body] = email.body
-
-  # turn email.body to a string and parse for the following:
-  #  <a href="http://groups.yahoo.com/group/freecycleportland/message/239070
-  #  ;_ylc=X3oDMTM5czZxaTBzBF9TAzk3MzU5NzE0BGdycElkAzExMDMyNjg2BGdycHNwSWQDMTcwNTA2NDIzNQRtc2dJZAMyMzkwNzAEc2VjA2Z0cgRzbGsDdnRwYwRzdGltZQMxMzY1MzkyNjcwBHRwY0lkAzIzOTA3MA--" style="text-decoration: none; color: #2D50FD;">Messages in this topic</a>
-  # 1. substring on http://groups.yahoo.com/group/freecycleportland/message/
-
-  matching = email.body.match /http:\/\/groups.yahoo.com\/group\/freecycleportland\/message\/\d+/
-
-
-  Location.create(:date => email.date, :message_id => email.message_id, :subject => email.subject, :body => matching.to_s, :location => location)
-
-  return data
-end
-
-def recent_offers (count=nil)
-  # Returns a list of subject lines with the word 'offer' in them.
-  return Mail.find({
-                     :order => :desc,
-                     :what => :last,
-                     :count => count,
-                     :keys => ["SUBJECT", "OFFER"]
-                   }).map { |email| make_email_data(email) }
-end
-
-def recent_offers_web_data
-  # Return a json string of recent offer data
-  recent_offers().to_json
+  
 end
