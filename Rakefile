@@ -5,3 +5,9 @@
 require File.expand_path('../config/application', __FILE__)
 
 FreecycleGeocoder::Application.load_tasks
+
+desc 'Add recent offers to database'
+task :recent_offers => :environment do
+  require './lib/freecycle_mail'
+  FreeCycleMail.recent_offers
+end

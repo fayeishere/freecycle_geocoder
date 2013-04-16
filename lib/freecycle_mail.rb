@@ -28,15 +28,15 @@ require 'json'
 module FreeCycleMail
 
   LOCATION_SPECIFIER = FreeCycleConfig::LOCATION_SPECIFIER
-  
+
   CREDENTIALS = {
     :port => 993,
     :enable_ssl => true
   }
 
-  CREDENTIALS[:address] = FreeCycleConfig::MAIL_CONFIG[:server]
+  CREDENTIALS[:address]   = FreeCycleConfig::MAIL_CONFIG[:server]
   CREDENTIALS[:user_name] = FreeCycleConfig::USER_CONFIG[:user_name]
-  CREDENTIALS[:password] = FreeCycleConfig::USER_CONFIG[:password]
+  CREDENTIALS[:password]  = FreeCycleConfig::USER_CONFIG[:password]
 
   Mail.defaults { retriever_method :imap, CREDENTIALS }
 
@@ -44,7 +44,7 @@ module FreeCycleMail
 
   def FreeCycleMail.search_for_location (subject)
     # Search a subject for possible locations
-    
+
     # first check for location in parentheses
     location = subject.scan(/\(.*\)/).first
     unless location.nil?
@@ -58,13 +58,13 @@ module FreeCycleMail
       s = subject.split(/-+/).last
       s == subject ? location = nil : location = s.strip
     end
-    
+
     # check for location after the last word "in"
     if location.nil?
       s = subject.split(/in /).last
       s == subject ? location = nil : location = s.strip
     end
-    
+
     # raise an error if somehow the location in string is neither nil or
     # string
     unless location.nil?
@@ -89,7 +89,14 @@ module FreeCycleMail
     data[:message_id] = email.message_id
     data[:subject] = email.subject
     data[:location] = search_for_location(email.subject)
-    data[:body] = email.body
+    data[:body] = String(email.body.match /http:\/\/groups.yahoo.com\/group\/freecycleportland\/message\/\d+/)
+
+  # turn email.body to a string and parse for the following:
+  #  <a href="http://groups.yahoo.com/group/freecycleportland/message/239070
+  #  ;_ylc=X3oDMTM5czZxaTBzBF9TAzk3MzU5NzE0BGdycElkAzExMDMyNjg2BGdycHNwSWQDMTcwNTA2NDIzNQRtc2dJZAMyMzkwNzAEc2VjA2Z0cgRzbGsDdnRwYwRzdGltZQMxMzY1MzkyNjcwBHRwY0lkAzIzOTA3MA--" style="text-decoration: none; color: #2D50FD;">Messages in this topic</a>
+  # 1. substring on http://groups.yahoo.com/group/freecycleportland/message/
+  #forum_link = email.body.match /http:\/\/groups.yahoo.com\/group\/freecycleportland\/message\/\d+/
+
     return data
   end
 
@@ -108,15 +115,22 @@ module FreeCycleMail
       raise "Invalid return from Mail.find."
     end
   end
-  
+
   def FreeCycleMail.recent_offers (count=nil)
     # Returns a list of subject lines with the word 'offer' in them.
-      get_recent_offers.map { |email| make_email_data(email) }
+      get_recent_offers(count).map do |email|
+        data = make_email_data(email)
+        Location.create!(:date       => data[:date],
+                         :message_id => data[:message_id],
+                         :subject    => data[:subject],
+                         :body       => data[:body],
+                         :location   => data[:location])
+    end
   end
-  
+
   def FreeCycleMail.recent_offers_web_data
     # Return a json string of recent offer data
     return recent_offers().to_json
   end
-  
+
 end
