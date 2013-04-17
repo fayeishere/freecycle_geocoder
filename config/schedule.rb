@@ -6,6 +6,7 @@
 # Example:
 #
 # set :output, "/path/to/my/cron_log.log"
+set :environment, 'development'
 #
 # every 2.hours do
 #   command "/usr/bin/some_great_command"
@@ -19,6 +20,6 @@
 
 # Learn more: http://github.com/javan/whenever
 
-every 30.s do
-  runner "locations.recent_offers()"
+every 2.minutes do
+  rake "recent_offers"
 end

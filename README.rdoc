@@ -19,5 +19,7 @@ module FreeCycleMap
     :group => "freecycle mailing list email address" }
 end
 
+Console command to kick start "whenever" gem magic: bundle exec whenever -w
+
 This is a student project built in the Portland Code School spring session.
 This project is in no way affiliated with Freecycle.
