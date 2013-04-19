@@ -10,27 +10,27 @@
 
 /* FONTS STYLES ============================== */
 
-@font-face {
+/*@font-face {
 font-family: Aaargh;
 src: url('/assets/Aaargh.ttf');
 }
 h3 {
   text-align: center;
 
-}
+}*/
 
 /* LAYOUT STYLES ============================== */
 
-header a, h1, section, aside, #logo, #icons, #icons img {
+/*header a, h1, section, aside, #logo, #icons, #icons img {
   float: left;
 }
 h1, h2, h3, p, a {
   font-family: Aaargh;
-}
+}*/
 
 /* HEADER STYLES ============================== */
 
-header {
+/*header {
   margin: 10px 0 0 25px;
 }
 h1 {
@@ -42,44 +42,45 @@ h1 {
 }
 #icons img {
   max-width: 100%;
-}
+}*/
 
 /* MAIN SECTION STYLES ========================= */
 
-section {
+/*section {
   clear: both;
   width: 70%;
   margin-top: -30px;
-}
+}*/
 
 /* MAP PORTION OF THE BODY ====================== */
 
-#map_canvas {
-  height: 100%
+/*#map_canvas {
+  height: 100%;
+  width: 100%;
 }
 h2 {
   font-size: 1.2em;
   margin: 15px 0 0;
-}
+}*/
 
 /* ASIDE STYLES ================================= */
 
-aside {
+/*aside {
   width: 30%;
   padding-top: 8px;
-}
+}*/
 
 
 /* FILTER FORM STYLES ================================= */
 
-aside #form-title {
+/*aside #form-title {
   font-size: 2em;
-}
+}*/
 
 /* POST-LIST SPECIFIC STYLES ====================
   (tabs styles are in the tabs.css file) ======= */
 
-.display-list {
+/*.display-list {
   height: 417px;
   overflow: auto;
 }
@@ -120,18 +121,27 @@ aside #form-title {
 }
 .post-div {
   width: 50%;
+}*/
+.freecycle-logo {
+  padding-top: 30px;
+  text-align: center;
 }
-
+#subject-list a {
+  color: #008100;
+}
+#display-list {
+  text-align: center;
+}
 /* FOOTER STYLES ================================ */
 
-footer {
+/*footer {
   clear: both;
   text-align: center;
   height: 150px;
 }
 .freecycle-logo {
   padding-top: 30px;
-}
+}*/
 
 
 

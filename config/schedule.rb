@@ -20,6 +20,6 @@ set :environment, 'development'
 
 # Learn more: http://github.com/javan/whenever
 
-every 2.minutes do
+every 45.minutes do
   rake "recent_offers"
 end

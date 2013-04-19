@@ -20,6 +20,7 @@ module FreeCycleMap
 end
 
 Console command to kick start "whenever" gem magic: bundle exec whenever -w
+
 Console command to end "whenever" cron job: bundle exec whenever -c
 
 This is a student project built in the Portland Code School spring session.

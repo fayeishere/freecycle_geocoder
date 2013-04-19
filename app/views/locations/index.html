@@ -1,37 +1,16 @@
-
-
-<section>
-  <div class="map">
-    <h2>freecycle items available in Portland, Oregon</h2>
-    <div id="map_canvas" style="width:600px; height:600px">
-    </div>
-  </div>
-</section>
-
-<aside>
-  <h3 id="form-title">Filter your search</h3>
-  <form>
-    <fieldset>
-      <input type="text" placeholder="Portland, Oregon">
-      <span class="help-block">Enter anything you would enter in a Google Maps search</span>
-      <button type="submit" class="btn">Filter</button>
-    </fieldset>
-  </form>
-
-  <div class="display-list">
-    <h3>Recent Posts</h3>
-    <ul id="tabs">
-        <li><a href="#" name="tab1">MAP</a></li>
-        <li><a href="#" name="tab2">ALL</a></li>
-    </ul>
-    <div id="content">
-      <div id="tab1">
-        <ul id="location-list"></ul>
+<div class="row">
+  <div class="span8">
+      <h2>Items Offered in Portland, Oregon</h2>
+      <div id="map_canvas" style="width:600px; height:600px">
       </div>
-      <div id="tab2">
-        <ul id="subject-list"></ul>
-      </div>
-    </div>
   </div>
-  </aside>
-
+   <div class="span4">
+      <h3 id="display-list">All Recent Posts</h3>
+      <div id="content">
+          <ul id="subject-list"></ul>
+      </div>
+        <div class="freecycle-logo">
+          <a href="http://www.freecycle.org"><img src="http://static.t-f-n.org/images/freecycle_logo.jpg" alt="free cycle logo" width="150px" height="50px"></a>
+        </div>
+  </div>
+</div>

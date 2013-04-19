@@ -77,20 +77,20 @@ function codeAddress(lat, longs, infoWin, links) {
 function MakeSubjectList(spec) {
   var post_subject_item;
   for (var i = 0; i < spec.length; i++) {
-    post_subject_item = $('<li>' + spec[i].subject + '</li>');
+    post_subject_item = $('<li><a href=' + spec[i].body + '>' + spec[i].subject + '<br>&nbsp' + '</a></li>');
     $('#subject-list').prepend(post_subject_item);
   }
 }
 
-function MakeLocationList(spec) {
-    var post_location_item;
-    for (var i = 0; i < spec.length; i++) {
-        if ( typeof spec[i].location !== null) {
-            post_location_item = $('<li>' + spec[i].location + '</li>');
-            $('#location-list').prepend(post_location_item);
-        }
-    }
-}
+// function MakeLocationList(spec) {
+//     var post_location_item;
+//     for (var i = 0; i < spec.length; i++) {
+//         if ( typeof spec[i].location !== null) {
+//             post_location_item = $('<li>' + spec[i].location + '</li>');
+//             $('#location-list').prepend(post_location_item);
+//         }
+//     }
+// }
 
 function geoLoop() {
 
@@ -102,7 +102,7 @@ function geoLoop() {
     context: this,
     success: function(data) {
       // generate location list via jquery
-      MakeLocationList(data);
+      // MakeLocationList(data);
       // generate subject list via jquery
       MakeSubjectList(data);
 
