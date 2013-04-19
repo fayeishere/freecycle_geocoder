@@ -88,6 +88,7 @@ module FreeCycleMail
     data[:date] = email.date
     data[:message_id] = email.message_id
     data[:subject] = email.subject
+    # data[:subject] = email.subject.gsub!("[freecycleportland]", "")
     data[:location] = search_for_location(email.subject)
     data[:body] = String(email.body.match /http:\/\/groups.yahoo.com\/group\/freecycleportland\/message\/\d+/)
 

@@ -132,6 +132,19 @@ h2 {
 #display-list {
   text-align: center;
 }
+#content {
+/*    background: #e5e5e5;*/
+/*    color: #008100;*/
+    font-size: 1.2em;
+/*    padding: 1.2em;*/
+    height: 450px;
+    overflow: auto;
+    position: relative;
+    z-index: 2;
+    border-style: groove;
+    border-radius: 0 5px 5px 5px;
+
+}
 /* FOOTER STYLES ================================ */
 
 /*footer {

@@ -57,11 +57,11 @@
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }*/
 
-#content {
-/*    background: #e5e5e5;*/
-/*    color: #008100;*/
+/*#content {
+    background: #e5e5e5;
+    color: #008100;
     font-size: 1.2em;
-/*    padding: 1.2em;*/
+    padding: 1.2em;
     height: 450px;
     overflow: auto;
     position: relative;
@@ -69,7 +69,7 @@
     border-style: groove;
     border-radius: 0 5px 5px 5px;
 
-}
+}*/
 
 /*#content ul {
   list-style: none;
