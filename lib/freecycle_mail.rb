@@ -79,6 +79,8 @@ module FreeCycleMail
       end
     end
     return location
+    # FIXME: it may be a good idea to remove "PDX" from the location
+    # string to prevent it matching the airport.
   end
 
   # http://rubydoc.info/gems/mail
@@ -118,14 +120,16 @@ module FreeCycleMail
   end
 
   def FreeCycleMail.recent_offers (count=nil)
-    # Returns a list of subject lines with the word 'offer' in them.
-      get_recent_offers(count).map do |email|
-        data = make_email_data(email)
+    # Updates database with messages with new message_ids.
+    get_recent_offers(count).map do |email|
+      data = make_email_data(email)
+      unless Location.where(:message_id => data[:message_id]).first
         Location.create!(:date       => data[:date],
                          :message_id => data[:message_id],
                          :subject    => data[:subject],
                          :body       => data[:body],
                          :location   => data[:location])
+      end
     end
   end
 
