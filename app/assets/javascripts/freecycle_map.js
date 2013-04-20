@@ -31,11 +31,11 @@ function initialize() {
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-    var marker = new google.maps.Marker({
-        position: myLatlng,
-        map: map,
-        title:"Freecycle Mapper!"
-    });
+    // var marker = new google.maps.Marker({
+    //     position: myLatlng,
+    //     map: map,
+    //     title:"Freecycle Mapper!"
+    // });
 }
 
 // This function adds the lat/longs and subect passed to the map as a marker
@@ -52,7 +52,7 @@ function codeAddress(lat, longs, infoWin, links) {
                 position: newLatLng
             });
             var popup = new google.maps.InfoWindow({
-                content: infoWin + " " + links.link(links),
+                content: infoWin + "<div class=linkInfo>" + links.link(links) + "</div>",
                 maxWidth: 300
             });
             google.maps.event.addListener(marker, "click", function() {

@@ -122,6 +122,10 @@ h2 {
 .post-div {
   width: 50%;
 }*/
+.linkInfo {
+/*  display: block;*/
+  padding: 10px;
+}
 .freecycle-logo {
   padding-top: 30px;
   text-align: center;
