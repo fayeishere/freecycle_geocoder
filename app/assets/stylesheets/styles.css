@@ -122,6 +122,11 @@ h2 {
 .post-div {
   width: 50%;
 }*/
+#box {
+/*   width: 125px;
+   height: 100px;*/
+   box-shadow: 10px 10px 10px 10px #505050;
+}
 .linkInfo {
 /*  display: block;*/
   padding: 10px;
@@ -145,9 +150,9 @@ h2 {
     overflow: auto;
     position: relative;
     z-index: 2;
-    border-style: groove;
-    border-radius: 0 5px 5px 5px;
-
+/*    border-style: groove;
+    border-radius: 0 5px 5px 5px;*/
+/*    box-shadow: 10px 10px 10px 10px #505050;*/
 }
 .top {
   padding-top: 44px;
