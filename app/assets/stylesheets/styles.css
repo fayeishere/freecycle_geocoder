@@ -149,6 +149,9 @@ h2 {
     border-radius: 0 5px 5px 5px;
 
 }
+.top {
+  padding-top: 44px;
+}
 /* FOOTER STYLES ================================ */
 
 /*footer {
