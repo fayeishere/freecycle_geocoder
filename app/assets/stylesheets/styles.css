@@ -122,10 +122,16 @@ h2 {
 .post-div {
   width: 50%;
 }*/
+#name {
+/*  text-align: center;*/
+  padding-top: 30px;
+}
 #box {
 /*   width: 125px;
    height: 100px;*/
-   box-shadow: 10px 10px 10px 10px #505050;
+   box-shadow: 3px 3px 6px 3px #505050;
+   padding-bottom: 20px;
+/**/
 }
 .linkInfo {
 /*  display: block;*/
@@ -146,10 +152,12 @@ h2 {
 /*    color: #008100;*/
     font-size: 1.2em;
 /*    padding: 1.2em;*/
-    height: 450px;
+    height: 420px;
     overflow: auto;
     position: relative;
     z-index: 2;
+    padding-left: 4px;
+    padding-right: 4px;
 /*    border-style: groove;
     border-radius: 0 5px 5px 5px;*/
 /*    box-shadow: 10px 10px 10px 10px #505050;*/
