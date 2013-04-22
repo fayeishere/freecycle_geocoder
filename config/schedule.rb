@@ -23,3 +23,7 @@ set :environment, 'development'
 every 5.minutes do
   rake "recent_offers"
 end
+
+every 1.day do
+  rake 'remove_old_offers'
+end
