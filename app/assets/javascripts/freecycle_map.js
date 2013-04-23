@@ -39,8 +39,10 @@ function initialize() {
 }
 
 // This function adds the lat/longs and subect passed to the map as a marker
-function codeAddress(lat, longs, infoWin, links) {
-  var newLatLng = new google.maps.LatLng(lat, longs);
+function codeAddress(lat, longs, infoWin, links, created) {
+    var newLatLng = new google.maps.LatLng(lat, longs);
+        longdate = created.slice(0, created.lastIndexOf("T"));
+        date = longdate.split("2013-").pop();
     // var address = document.getElementById("address").value;
     // console.log(address);
     // geocoder.geocode( { 'address': address}, function(results, status) {
@@ -52,7 +54,7 @@ function codeAddress(lat, longs, infoWin, links) {
                 position: newLatLng
             });
             var popup = new google.maps.InfoWindow({
-                content: infoWin + "<div class=linkInfo>" + links.link(links) + "</div>",
+                content: infoWin + " " + date + "<div class=linkInfo>" + " " + links.link(links) + "</div>",
                 maxWidth: 300
             });
             google.maps.event.addListener(marker, "click", function() {
@@ -75,11 +77,18 @@ function codeAddress(lat, longs, infoWin, links) {
     // });
 }
 function MakeSubjectList(spec) {
-  var post_subject_item;
-  for (var i = 0; i < spec.length; i++) {
-    post_subject_item = $('<li><a href=' + spec[i].body + '>' + spec[i].subject + '<br>&nbsp' + '</a></li>');
-    $('#subject-list').prepend(post_subject_item);
-  }
+    var created;
+    var longdate;
+    var date;
+    var post_subject_item;
+    for (var i = 0; i < spec.length; i++) {
+        created = spec[i].created_at;
+        longdate = created.slice(0, created.lastIndexOf("T"));
+        date = longdate.split("2013-").pop();
+        post_subject_item = $('<li><a href=' + spec[i].body + '>' + spec[i].subject + ' - ' + date + '<br>&nbsp' + '</a></li>');
+        $('#subject-list').prepend(post_subject_item);
+        console.log(created);
+    }
 }
 
 // function MakeLocationList(spec) {
@@ -104,11 +113,11 @@ function geoLoop() {
       // generate location list via jquery
       // MakeLocationList(data);
       // generate subject list via jquery
-      MakeSubjectList(data);
+        MakeSubjectList(data);
 
       for (var i = 0; i < data.length; i++) {
         if (typeof data[i].location === 'string') {
-          codeAddress(data[i].latitude, data[i].longitude, data[i].subject, data[i].body);
+          codeAddress(data[i].latitude, data[i].longitude, data[i].subject, data[i].body, data[i].created_at);
           console.log(data);
         }
       }
