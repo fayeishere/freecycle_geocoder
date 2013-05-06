@@ -85,7 +85,7 @@ function MakeSubjectList(spec) {
         created = spec[i].created_at;
         longdate = created.slice(0, created.lastIndexOf("T"));
         date = longdate.split("2013-").pop();
-        post_subject_item = $('<li><a href=' + spec[i].body + '>' + spec[i].subject + ' - ' + date + '<br>&nbsp' + '</a></li>');
+        post_subject_item = $('<li><a href=' + spec[i].body + '>' + spec[i].subject + ' - ' + date + '</a>' + '<br>&nbsp</li>');
         $('#subject-list').prepend(post_subject_item);
         console.log(created);
     }
@@ -110,9 +110,6 @@ function geoLoop() {
     type: "GET",
     context: this,
     success: function(data) {
-      // generate location list via jquery
-      // MakeLocationList(data);
-      // generate subject list via jquery
         MakeSubjectList(data);
 
       for (var i = 0; i < data.length; i++) {
