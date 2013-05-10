@@ -25,6 +25,16 @@ require 'json'
 
 # !!! FIXME [wc 2013-03-13]: This is somewhat bad
 
+module FreeCycleConfig
+    USER_CONFIG = {
+      :user_name => ENV['FCM_USERNAME'],
+      :password => ENV['FCM_PASSWD'] }
+    MAIL_CONFIG = {
+      :server => ENV['FCM_SERVER'],
+      :group => ENV['FCM_GROUP'] }
+    LOCATION_SPECIFIER = ENV['FCM_LOCATION']
+end
+
 module FreeCycleMail
 
   LOCATION_SPECIFIER = FreeCycleConfig::LOCATION_SPECIFIER

@@ -24,10 +24,10 @@ var homeCenter; // center of the map- used when closing popups
 
 function initialize() {
     // geocoder = new google.maps.Geocoder();
-    var myLatlng = homeCenter = new google.maps.LatLng(45.528, -47.676); // this is Portland
+    // var myLatlng = homeCenter = new google.maps.LatLng(45.528, -47.676);
     var mapOptions = {
         zoom: 10,
-        center: new google.maps.LatLng(45.528, -122.676),
+        center: new google.maps.LatLng(45.528, -122.676), // this is Portland
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
