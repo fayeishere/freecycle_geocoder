@@ -14,5 +14,5 @@ end
 
 desc 'Remove old offers from database'
 task :remove_old_offers => :environment do
-  Location.where(:date < Time.now - (60 * 60 * 24 * 14)).destroy_all
+  Location.where("date < ?", Time.now - (60 * 60 * 24 * 14)).destroy_all
 end
