@@ -135,14 +135,14 @@ module FreeCycleMail
     puts FCM_PASSWORD
     get_recent_offers(count).map do |email|
       data = make_email_data(email)
-      unless Location.where(:message_id => data[:message_id]).first
+      # unless Location.where(:message_id => data[:message_id]).first
         Location.create!(:date       => data[:date],
                          :message_id => data[:message_id],
                          :subject    => data[:subject],
                          :body       => data[:body],
                          :location   => data[:location])
         puts "inside"
-      end
+      # end
     end
   end
 
