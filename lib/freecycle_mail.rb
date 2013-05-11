@@ -131,6 +131,8 @@ module FreeCycleMail
   def FreeCycleMail.recent_offers (count=nil)
     # Updates database with messages with new message_ids.
     puts "outside"
+    puts FCM_USERNAME
+    puts FCM_PASSWORD
     get_recent_offers(count).map do |email|
       data = make_email_data(email)
       unless Location.where(:message_id => data[:message_id]).first
