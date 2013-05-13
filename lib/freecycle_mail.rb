@@ -116,8 +116,8 @@ module FreeCycleMail
   def FreeCycleMail.get_recent_offers(count=nil)
     puts count
     offers = Mail.find({
-                         :order => :desc,
-                         :what => :last,
+                         # :order => :desc,
+                         # :what => :last,
                          :count => count,
                          :keys => ["SUBJECT", "OFFER"]
                        })
