@@ -135,6 +135,7 @@ module FreeCycleMail
 
     get_recent_offers(count).map do |email|
       data = make_email_data(email)
+      puts "inside"
       # unless Location.where(:message_id => data[:message_id]).first
         Location.create!(:date       => data[:date],
                          :message_id => data[:message_id],
