@@ -121,6 +121,7 @@ module FreeCycleMail
                          :count => count,
                          :keys => ["SUBJECT", "OFFER"]
                        })
+    puts offers
     if offers.is_a? Mail::Message
       return [offers]
     elsif offers.is_a? Array
