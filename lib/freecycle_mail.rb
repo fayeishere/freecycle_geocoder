@@ -133,7 +133,7 @@ module FreeCycleMail
     # Updates database with messages with new message_ids.
     puts "outside"
 
-    get_recent_offers(5).map do |email|
+    get_recent_offers().map do |email|
             puts "inside"
       data = make_email_data(email)
 
