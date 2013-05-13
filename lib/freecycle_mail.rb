@@ -113,11 +113,11 @@ module FreeCycleMail
     return data
   end
 
-  def FreeCycleMail.get_recent_offers(count=5)
+  def FreeCycleMail.get_recent_offers()
     offers = Mail.find({
                          :order => :desc,
                          :what => :last,
-                         :count => count,
+                         # :count => count,
                          :keys => ["SUBJECT", "OFFER"]
                        })
     if offers.is_a? Mail::Message
