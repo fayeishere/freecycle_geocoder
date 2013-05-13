@@ -28,7 +28,7 @@ require 'json'
 module FreeCycleConfig
     USER_CONFIG = {
       :user_name => ENV['FCM_USERNAME'],
-      :password => ENV['FCM_PASSWD'] }
+      :password => ENV['FCM_PASSWORD'] }
     MAIL_CONFIG = {
       :server => ENV['FCM_SERVER'],
       :group => ENV['FCM_GROUP'] }
