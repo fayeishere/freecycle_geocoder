@@ -103,7 +103,7 @@ module FreeCycleMail
 # This is a parse issue as "offers" is bringing in EVERYTHING and Heroku doesn't understand
 # Possible fix could be using MailGun as an addon for Heroku to replace Imap
 # Another possible fix could be that there is an error somewhere that is stopping everything
-  def FreeCycleMail.get_recent_offers(count=nil)
+  def FreeCycleMail.get_recent_offers(count=1)
     offers = Mail.find({
                          :order => :desc,
                          :what => :last,
@@ -111,9 +111,10 @@ module FreeCycleMail
                          :keys => ["SUBJECT", "OFFER"]
                        })
     if offers.is_a? Mail::Message
+      puts look
       return [offers]
     elsif offers.is_a? Array
-      puts offers
+      puts offers[0]
       return offers
     else
       raise "Invalid return from Mail.find."
