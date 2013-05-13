@@ -11,20 +11,6 @@ require 'json'
 # http://metabates.com/2011/06/28/lets-say-goodbye-to-yaml-for-configuration-shall-we/
 
 
-# 'lib/mail_config.rb should be a ruby file in the following format:
-
-# module FreeCycleConfig
-#   USER_CONFIG = {
-#     :user_name => "username",
-#     :password => "password" }
-#   MAIL_CONFIG = {
-#     :server => "mailserver",
-#     :group => "freecycle mailing list email address" }
-#   LOCATION_SPECIFIER = "What to add to location for searches"
-# end
-
-# !!! FIXME [wc 2013-03-13]: This is somewhat bad
-
 module FreeCycleConfig
   # Add env variables locally
     USER_CONFIG = {
@@ -113,6 +99,10 @@ module FreeCycleMail
     return data
   end
 
+# We begin Heroku issues here - the error is unexpected token CRLF (expected NUMBER)
+# This is a parse issue as "offers" is bringing in EVERYTHING and Heroku doesn't understand
+# Possible fix could be using MailGun as an addon for Heroku to replace Imap
+# Another possible fix could be that there is an error somewhere that is stopping everything
   def FreeCycleMail.get_recent_offers(count=nil)
     offers = Mail.find({
                          :order => :desc,
