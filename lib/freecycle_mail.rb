@@ -114,7 +114,11 @@ module FreeCycleMail
       puts look
       return [offers]
     elsif offers.is_a? Array
-      puts offers[0]
+      offer = offers[0].to_s
+      puts offer.split.join("\n")
+      # offer_stripped = offer.gsub(/\r\n?/, "\n")
+      # puts offer_stripped
+      # puts offer
       return offers
     else
       raise "Invalid return from Mail.find."
