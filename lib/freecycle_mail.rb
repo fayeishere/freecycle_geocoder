@@ -26,6 +26,7 @@ require 'json'
 # !!! FIXME [wc 2013-03-13]: This is somewhat bad
 
 module FreeCycleConfig
+  # Add env variables locally
     USER_CONFIG = {
       :user_name => ENV['FCM_USERNAME'],
       :password => ENV['FCM_PASSWORD'] }
