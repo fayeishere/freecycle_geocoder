@@ -113,11 +113,12 @@ module FreeCycleMail
     return data
   end
 
-  def FreeCycleMail.get_recent_offers()
+  def FreeCycleMail.get_recent_offers(count=nil)
+    puts count
     offers = Mail.find({
                          :order => :desc,
                          :what => :last,
-                         # :count => count,
+                         :count => count,
                          :keys => ["SUBJECT", "OFFER"]
                        })
     if offers.is_a? Mail::Message
@@ -129,11 +130,11 @@ module FreeCycleMail
     end
   end
 
-  def FreeCycleMail.recent_offers ()
+  def FreeCycleMail.recent_offers (count=nil)
     # Updates database with messages with new message_ids.
     puts "outside"
 
-    get_recent_offers().map do |email|
+    get_recent_offers(count).map do |email|
             puts "inside"
       data = make_email_data(email)
 
