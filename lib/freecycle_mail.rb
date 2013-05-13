@@ -102,7 +102,7 @@ module FreeCycleMail
     data[:message_id] = email.message_id
     data[:subject] = email.subject.sub(/^\[.*\] /, '')
     data[:location] = search_for_location(email.subject)
-    data[:body] = String(email.body.match /http:\/\/groups.yahoo.com\/group\/freecycleportland\/message\/\d+/)
+    data[:body] = String(email.body.match(/http:\/\/groups.yahoo.com\/group\/freecycleportland\/message\/\d+/))
 
   # turn email.body to a string and parse for the following:
   #  <a href="http://groups.yahoo.com/group/freecycleportland/message/239070
@@ -114,17 +114,16 @@ module FreeCycleMail
   end
 
   def FreeCycleMail.get_recent_offers(count=nil)
-    puts count
     offers = Mail.find({
-                         # :order => :desc,
-                         # :what => :last,
+                         :order => :desc,
+                         :what => :last,
                          :count => count,
                          :keys => ["SUBJECT", "OFFER"]
                        })
-    puts offers
     if offers.is_a? Mail::Message
       return [offers]
     elsif offers.is_a? Array
+      puts offers
       return offers
     else
       raise "Invalid return from Mail.find."
