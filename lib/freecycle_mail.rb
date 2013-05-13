@@ -113,7 +113,7 @@ module FreeCycleMail
     return data
   end
 
-  def FreeCycleMail.get_recent_offers(count=nil)
+  def FreeCycleMail.get_recent_offers(count=5)
     offers = Mail.find({
                          :order => :desc,
                          :what => :last,
