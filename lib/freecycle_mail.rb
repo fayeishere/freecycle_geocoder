@@ -129,7 +129,7 @@ module FreeCycleMail
     end
   end
 
-  def FreeCycleMail.recent_offers (count=nil)
+  def FreeCycleMail.recent_offers (count=5)
     # Updates database with messages with new message_ids.
     puts "outside"
 
