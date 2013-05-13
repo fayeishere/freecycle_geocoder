@@ -115,11 +115,11 @@ module FreeCycleMail
       return [offers]
     elsif offers.is_a? Array
       offer = offers[0].to_s
-      puts offer.split.join("\n")
-      # offer_stripped = offer.gsub(/\r\n?/, "\n")
+      offer = offer.split.join("\n")
+      offer_stripped = [offer.gsub(/\r\n?/, "\n")]
       # puts offer_stripped
-      # puts offer
-      return offers
+      puts offer_stripped
+      return offer_stripped
     else
       raise "Invalid return from Mail.find."
     end
@@ -139,7 +139,7 @@ module FreeCycleMail
                          :subject    => data[:subject],
                          :body       => data[:body],
                          :location   => data[:location])
-        puts "inside"
+        puts "really inside"
       # end
     end
   end
