@@ -23,3 +23,5 @@ production:
   database: db/production.postgresql
   pool: 5
   timeout: 5000
+  username: ENV['HEROKU_USERNAME']
+  password: ENV['HEROKU_PASSWORD']
